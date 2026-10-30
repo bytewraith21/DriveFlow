@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DriverFlow — Gestão financeira para motoristas</title>
+    <style>
+        :root {
+            --navy: #12213a;
+            --blue: #244b7a;
+            --green: #35b779;
+            --bg: #f3f6fa;
+            --card: #fff;
+            --text: #172033;
+            --muted: #68758a;
+            --line: #e2e8f0;
+            --red: #d9534f
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        header {
+            background: linear-gradient(120deg, var(--navy), var(--blue));
+            color: #fff;
+            padding: 24px max(20px, calc((100% - 1120px)/2));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--green);
+            display: grid;
+            place-items: center;
+            color: var(--navy);
+            font-size: 25px;
+            font-weight: 900
+        }
+
+        .brand h1 {
+            font-size: 22px;
+            margin: 0
+        }
+
+        .brand p {
+            margin: 2px 0 0;
+            color: #d8e5f3;
+            font-size: 13px
+        }
+
+        main {
+            max-width: 1120px;
+            margin: 24px auto;
+            padding: 0 18px
+        }
+
+        .topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px
+        }
+
+        .topline h2 {
+            margin: 0;
+            font-size: 25px
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: var(--green);
+            color: #082b20;
+            font-weight: 750;
+            cursor: pointer
+        }
+
+        .btn.secondary {
+            background: #e8eef6;
+            color: var(--navy)
+        }
+
+        .btn.danger {
+            background: #fae8e7;
+            color: #8b2420
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 3px 12px #10213a08
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .metric {
+            font-size: 26px;
+            font-weight: 800;
+            margin-top: 6px;
+            letter-spacing: -.6px
+        }
+
+        .green {
+            color: #158454
+        }
+
+        .red {
+            color: var(--red)
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 16px;
+            margin-top: 16px
+        }
+
+        .card h3 {
+            margin: 0 0 14px;
+            font-size: 17px
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 650;
+            color: #34445b;
+            margin: 10px 0 5px
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1px solid #d6deea;
+            border-radius: 9px;
+            padding: 10px 11px;
+            font: inherit;
+            background: #fff;
+            color: var(--text)
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #b8f0d5;
+            border-color: var(--green)
+        }
+
+        .formrow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .formactions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px 7px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        th {
+            color: var(--muted);
+            font-weight: 700
+        }
+
+        td:last-child,
+        th:last-child {
+            text-align: right
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--muted);
+            padding: 25px 8px
+        }
+
+        .progress {
+            height: 9px;
+            background: #e8edf3;
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 12px 0 6px
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            background: var(--green);
+            width: 0
+        }
+
+        .note {
+            background: #edf8f2;
+            border: 1px solid #ccebd9;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #24523d;
+            margin: 16px 0
+        }
+
+        .footer {
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+            margin: 22px 0 30px
+        }
+
+        @media(max-width:850px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .layout {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:480px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 9px
+            }
+
+            .card {
+                padding: 13px
+            }
+
+            .metric {
+                font-size: 21px
+            }
+
+            .formrow {
+                grid-template-columns: 1fr
+            }
+
+            .topline h2 {
+                font-size: 21px
+            }
+
+            header {
+                padding: 18px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">↗</div>
+            <div>
+                <h1>DriverFlow</h1>
+                <p>Clareza financeira para quem vive na direção</p>
+            </div>
+        </div><button class="btn secondary" id="exportBtn">Exportar CSV</button>
+    </header>
+    <main>
+        <div class="topline">
+            <div>
+                <h2>Painel financeiro</h2>
+                <div class="muted">Registre seu dia e entenda quanto realmente sobra.</div>
+            </div><button class="btn secondary" id="clearBtn">Limpar dados de demonstração</button>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="metric-label">Receitas registradas</div>
+                <div class="metric green" id="incomeMetric">R$ 0,00</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Despesas registradas</div>
+                <div class="metric red" id="expenseMetric">R$ 0,00</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Saldo estimado</div>
+                <div class="metric" id="profitMetric">R$ 0,00</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Custo por km</div>
+                <div class="metric" id="kmMetric">R$ 0,00</div>
+            </div>
+        </div>
+        <div class="layout">
+            <section class="card">
+                <h3>Adicionar movimentação</h3>
+                <form id="entryForm">
+                    <label for="kind">Tipo</label><select id="kind">
+                        <option value="income">Receita</option>
+                        <option value="expense">Despesa</option>
+                    </select>
+                    <div class="formrow">
+                        <div><label for="date">Data</label><input id="date" type="date" required></div>
+                        <div><label for="category">Categoria</label><select id="category">
+                                <option>Corridas</option>
+                                <option>Bônus</option>
+                                <option>Combustível</option>
+                                <option>Manutenção</option>
+                                <option>Alimentação</option>
+                                <option>Pedágio/estacionamento</option>
+                                <option>Taxas</option>
+                                <option>Outros</option>
+                            </select></div>
+                    </div>
+                    <div class="formrow">
+                        <div><label for="amount">Valor (R$)</label><input id="amount" type="number" min="0.01"
+                                step="0.01" placeholder="Ex.: 185,50" required></div>
+                        <div><label for="km">Quilômetros do período</label><input id="km" type="number" min="0"
+                                step="0.1" placeholder="Ex.: 120"></div>
+                    </div>
+                    <label for="description">Descrição (opcional)</label><input id="description" maxlength="90"
+                        placeholder="Ex.: abastecimento no posto">
+                    <div class="formactions"><button class="btn" type="submit">Salvar movimentação</button><button
+                            class="btn secondary" type="reset">Limpar formulário</button></div>
+                </form>
+                <div class="note">Dica: informe a quilometragem total no registro de despesas do período para estimar o
+                    custo por km. Evite somar a mesma quilometragem várias vezes.</div>
+            </section>
+            <section class="card">
+                <h3>Meta diária de saldo</h3><label for="goal">Meta (R$)</label><input id="goal" type="number" min="0"
+                    step="1" value="250">
+                <div class="progress"><span id="goalBar"></span></div>
+                <div class="muted" id="goalText">Registre receitas e despesas para acompanhar sua meta.</div>
+                <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+                <h3>Resumo rápido</h3>
+                <div class="muted">Os números são calculados a partir dos registros salvos neste navegador.</div>
+                <p><strong id="daysText">0 movimentações</strong></p>
+                <p class="muted">Este MVP não se conecta às plataformas Uber/99 nem importa extratos automaticamente. O
+                    saldo é uma estimativa baseada no que você informar.</p>
+            </section>
+        </div>
+        <section class="card" style="margin-top:16px">
+            <div class="topline">
+                <h3 style="margin:0">Movimentações recentes</h3><span class="muted">Mais recentes primeiro</span>
+            </div>
+            <div style="overflow-x:auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>Categoria / descrição</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="entriesBody"></tbody>
+                </table>
+            </div>
+        </section>
+        <div class="footer">DriverFlow · Projeto Integrador — MVP acadêmico</div>
+    </main>
+    <script>
+        const $ = id => document.getElementById(id);
+        const STORAGE_KEY = 'DriverFlow_movimentacoes';
+        let entries = [];
+
+        function today() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        $('date').value = today();
+        const money = n => Number(n).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+
+        function loadEntries() {
+            try {
+                entries = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch (error) {
+                entries = [];
+                alert('Não foi possível ler os dados salvos neste navegador.');
+            }
+            render();
+        }
+
+        function saveEntries() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+                render();
+            } catch (error) {
+                alert('Não foi possível salvar. O armazenamento do navegador pode estar cheio ou bloqueado.');
+            }
+        }
+
+        function saveEntry(entry) {
+            entry.id = Date.now();
+            entries.push(entry);
+            saveEntries();
+        }
+
+        function deleteEntry(id) {
+            if (!confirm('Excluir esta movimentação?')) return;
+            entries = entries.filter(x => x.id !== id);
+            saveEntries();
+        }
+
+        function render() {
+            const inc = entries.filter(x => x.kind === 'income')
+                .reduce((sum, x) => sum + Number(x.amount), 0);
+            const exp = entries.filter(x => x.kind === 'expense')
+                .reduce((sum, x) => sum + Number(x.amount), 0);
+            const kms = entries.filter(x => x.kind === 'expense')
+                .reduce((sum, x) => sum + Number(x.km || 0), 0);
+            const balance = inc - exp;
+
+            $('incomeMetric').textContent = money(inc);
+            $('expenseMetric').textContent = money(exp);
+            $('profitMetric').textContent = money(balance);
+            $('profitMetric').className = 'metric ' + (balance >= 0 ? 'green' : 'red');
+            $('kmMetric').textContent = money(kms ? exp / kms : 0);
+
+            const goal = Math.max(0, Number($('goal').value) || 0);
+            const pct = goal ? Math.max(0, Math.min(100, balance / goal * 100)) : 0;
+            $('goalBar').style.width = pct + '%';
+            $('goalText').textContent = goal
+                ? `${money(balance)} de saldo em relação à meta de ${money(goal)} (${Math.round(pct)}%).`
+                : 'Defina uma meta maior que zero.';
+
+            $('daysText').textContent = `${entries.length} movimentação(ões) registrada(s)`;
+            const body = $('entriesBody');
+            body.innerHTML = '';
+
+            [...entries].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id)
+                .forEach(x => {
+                    const tr = document.createElement('tr');
+                    const values = [
+                        x.date,
+                        x.kind === 'income' ? 'Receita' : 'Despesa',
+                        x.category + (x.description ? ' — ' + x.description : ''),
+                        money(Number(x.amount))
+                    ];
+
+                    values.forEach((value, i) => {
+                        const td = document.createElement('td');
+                        td.textContent = value;
+                        if (i === 3) td.className = x.kind === 'income' ? 'green' : 'red';
+                        tr.appendChild(td);
+                    });
+
+                    const td = document.createElement('td');
+                    const button = document.createElement('button');
+                    button.textContent = 'Excluir';
+                    button.className = 'btn danger';
+                    button.style.padding = '6px 9px';
+                    button.onclick = () => deleteEntry(x.id);
+                    td.appendChild(button);
+                    tr.appendChild(td);
+                    body.appendChild(tr);
+                });
+
+            if (!entries.length) {
+                body.innerHTML = '<tr><td colspan="5" class="empty">Nenhuma movimentação ainda. Adicione uma ao lado para começar.</td></tr>';
+            }
+        }
+
+        $('entryForm').addEventListener('submit', event => {
+            event.preventDefault();
+            const amount = Number($('amount').value);
+
+            if (!(amount > 0)) {
+                alert('Informe um valor maior que zero.');
+                return;
+            }
+
+            saveEntry({
+                kind: $('kind').value,
+                date: $('date').value,
+                category: $('category').value,
+                amount: amount,
+                km: Math.max(0, Number($('km').value) || 0),
+                description: $('description').value.trim()
+            });
+
+            $('entryForm').reset();
+            $('date').value = today();
+        });
+
+        $('goal').addEventListener('input', render);
+
+        $('clearBtn').onclick = () => {
+            if (confirm('Apagar TODAS as movimentações salvas neste navegador? Esta ação não pode ser desfeita.')) {
+                entries = [];
+                saveEntries();
+            }
+        };
+
+        $('exportBtn').onclick = () => {
+            const rows = [
+                ['data', 'tipo', 'categoria', 'descricao', 'valor_brl', 'quilometros'],
+                ...entries.map(x => [
+                    x.date,
+                    x.kind === 'income' ? 'receita' : 'despesa',
+                    x.category,
+                    x.description,
+                    x.amount,
+                    Number(x.km || 0)
+                ])
+            ];
+
+            const csv = rows.map(row =>
+                row.map(value => '"' + String(value ?? '').replaceAll('"', '""') + '"').join(';')
+            ).join('\n');
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'DriverFlow_movimentacoes.csv';
+            link.click();
+            URL.revokeObjectURL(url);
+        };
+
+        loadEntries();
+    </script>
+</body>
+
+</html>

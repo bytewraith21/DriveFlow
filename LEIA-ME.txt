@@ -1,0 +1,25 @@
+# RodaCerta — versão simplificada para apresentação
+
+## Como abrir
+1. Extraia esta pasta do arquivo ZIP.
+2. Dê dois cliques em `index.html`.
+3. O sistema abrirá no navegador. Não precisa instalar Python, Flask, SQLite ou iniciar servidor.
+
+## O que o sistema faz
+- Cadastra receitas e despesas.
+- Registra data, categoria, valor, quilometragem e descrição.
+- Calcula receitas, despesas, saldo estimado e custo por quilômetro.
+- Permite definir uma meta diária.
+- Permite excluir movimentações e exportar os registros em CSV.
+
+## Como os dados são salvos
+O projeto usa `localStorage`, um recurso do navegador. Os registros ficam salvos no navegador e no computador em que foram cadastrados. Eles continuam disponíveis ao fechar e abrir o navegador, mas não são sincronizados com outros computadores.
+
+## Tecnologias
+- HTML: estrutura da página.
+- CSS: aparência.
+- JavaScript: funcionamento, cálculos e validações.
+- localStorage: armazenamento local no navegador.
+
+## Observação para a apresentação
+Esta versão é um protótipo acadêmico. Ela não se conecta à Uber ou à 99 e não importa extratos automaticamente. Os resultados dependem das informações inseridas pelo usuário.
