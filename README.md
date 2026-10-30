@@ -43,14 +43,13 @@ O projeto foi estruturado com base na pesquisa de mercado do Prof. Sedenilso Mac
 Desenvolvido sem dependência de servidores pesados ou bancos de dados relacionais:
 
 - **HTML5:** Estrutura das telas.
-- **CSS3:** Visual limpo, responsivo e de fácil leitura.
-- **JavaScript (Vanilla ES6+):** Cálculos, manipulação de dados e regras do sistema.
+- **CSS:** Visual limpo, responsivo e de fácil leitura.
+- **JavaScript:** Cálculos, manipulação de dados e regras do sistema.
 - **localStorage:** Armazenamento local direto no navegador do usuário.
 
 ---
 
 ## - Como Rodar
-
 
 1. **Clone o repositório:**
    ```bash
@@ -69,7 +68,7 @@ Desenvolvido sem dependência de servidores pesados ou bancos de dados relaciona
 
 ```text
 DriveFlow/
-├── index.html                    # Interface, visual e lógica do sistema                 
+├── index.html                    # Interface, visual e lógica do sistema
 ├── relatorio_projeto_integrador.html # Relatório técnico do trabalho
 ├── logo_rodacerta.svg            # Logo e identidade gráfica
 └── README.md                     # Documentação oficial
